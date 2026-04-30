@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Carrinho de Compras</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+    button {
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🛒 Carrinho de Compras</h2>
+
+  <input type="text" id="nome" placeholder="Nome do produto">
+  <input type="number" id="preco" placeholder="Preço">
+
+  <button onclick="adicionarProduto()">Adicionar Produto</button>
+  <button onclick="removerUltimo()">Remover Último (pop)</button>
+
+  <ul id="lista"></ul>
+
+  <script>
+    let carrinho = [];
+
+    function adicionarProduto() {
+      const nome = document.getElementById("nome").value.trim();
+      const preco = Number(document.getElementById("preco").value);
+
+      if (nome === "" || isNaN(preco)) return;
+
+      // adiciona no array
+      carrinho.push({ nome, preco });
+
+      document.getElementById("nome").value = "";
+      document.getElementById("preco").value = "";
+
+      atualizarLista();
+    }
+
+    function removerUltimo() {
+      // remove o último item
+      carrinho.pop();
+      atualizarLista();
+    }
+
+    function atualizarLista() {
+      const ul = document.getElementById("lista");
+      ul.innerHTML = "";
+
+      carrinho.forEach(produto => {
+        const li = document.createElement("li");
+        li.textContent = `${produto.nome} - R$ ${produto.preco}`;
+        ul.appendChild(li);
+      });
+    }
+  </script>
+
+</body>
+</html>

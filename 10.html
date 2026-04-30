@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Ranking de Jogadores</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+    input, button {
+      margin: 5px;
+    }
+    .top1 {
+      color: gold;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🏆 Ranking de Jogadores</h2>
+
+  <input type="text" id="jogador" placeholder="Nome do jogador">
+  <input type="number" id="pontos" placeholder="Pontos">
+
+  <button onclick="adicionarJogador()">Adicionar</button>
+
+  <ul id="lista"></ul>
+
+  <script>
+    let ranking = [];
+
+    function adicionarJogador() {
+      const jogador = document.getElementById("jogador").value.trim();
+      const pontos = Number(document.getElementById("pontos").value);
+
+      if (jogador === "" || isNaN(pontos)) return;
+
+      ranking.push({ jogador, pontos });
+
+      document.getElementById("jogador").value = "";
+      document.getElementById("pontos").value = "";
+
+      atualizarRanking();
+    }
+
+    function atualizarRanking() {
+      const ul = document.getElementById("lista");
+      ul.innerHTML = "";
+
+      // ordenar por pontos (maior → menor)
+      const ordenado = [...ranking].sort((a, b) => b.pontos - a.pontos);
+
+      // usar map para criar posição
+      const comPosicao = ordenado.map((item, index) => {
+        return {
+          posicao: index + 1,
+          jogador: item.jogador,
+          pontos: item.pontos
+        };
+      });
+
+      // mostrar no DOM
+      comPosicao.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item.posicao}º - ${item.jogador} (${item.pontos} pts)`;
+
+        if (item.posicao === 1) {
+          li.classList.add("top1");
+        }
+
+        ul.appendChild(li);
+      });
+    }
+  </script>
+
+</body>
+</html>

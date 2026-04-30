@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerenciador de Alunos</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+    input, button {
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📚 Gerenciador de Alunos</h2>
+
+  <input type="text" id="nome" placeholder="Nome do aluno">
+  <input type="number" id="nota" placeholder="Nota">
+  <button onclick="adicionarAluno()">Adicionar</button>
+  <button onclick="filtrarAprovados()">Mostrar Aprovados</button>
+  <button onclick="mostrarTodos()">Mostrar Todos</button>
+
+  <ul id="lista"></ul>
+
+  <script>
+    let alunos = [];
+
+    function adicionarAluno() {
+      const nome = document.getElementById("nome").value.trim();
+      const nota = Number(document.getElementById("nota").value);
+
+      if (nome === "" || isNaN(nota)) return;
+
+      // adiciona usando push
+      alunos.push({ nome: nome, nota: nota });
+
+      document.getElementById("nome").value = "";
+      document.getElementById("nota").value = "";
+
+      mostrarTodos();
+    }
+
+    function mostrarTodos() {
+      atualizarLista(alunos);
+    }
+
+    function filtrarAprovados() {
+      // usa filter
+      const aprovados = alunos.filter(aluno => aluno.nota >= 7);
+      atualizarLista(aprovados);
+    }
+
+    function atualizarLista(lista) {
+      const ul = document.getElementById("lista");
+      ul.innerHTML = "";
+
+      lista.forEach(aluno => {
+        const li = document.createElement("li");
+        li.textContent = `${aluno.nome} - Nota: ${aluno.nota}`;
+        ul.appendChild(li);
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Catálogo de Filmes</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+    input, button {
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🎬 Catálogo de Filmes</h2>
+
+  <!-- Formulário -->
+  <input type="text" id="titulo" placeholder="Título">
+  <input type="text" id="genero" placeholder="Gênero">
+  <input type="number" id="ano" placeholder="Ano">
+
+  <button onclick="adicionarFilme()">Adicionar Filme</button>
+  <button onclick="mostrarTodos()">Mostrar Todos</button>
+  <button onclick="filtrarGenero()">Filtrar por Gênero</button>
+
+  <ul id="lista"></ul>
+
+  <script>
+    let filmes = [];
+
+    function adicionarFilme() {
+      const titulo = document.getElementById("titulo").value.trim();
+      const genero = document.getElementById("genero").value.trim();
+      const ano = document.getElementById("ano").value;
+
+      if (titulo === "" || genero === "" || ano === "") return;
+
+      filmes.push({ titulo, genero, ano });
+
+      document.getElementById("titulo").value = "";
+      document.getElementById("genero").value = "";
+      document.getElementById("ano").value = "";
+
+      mostrarTodos();
+    }
+
+    function mostrarTodos() {
+      atualizarLista(filmes);
+    }
+
+    function filtrarGenero() {
+      const generoFiltro = prompt("Digite o gênero para filtrar:");
+
+      if (!generoFiltro) return;
+
+      const filtrados = filmes.filter(filme =>
+        filme.genero.toLowerCase() === generoFiltro.toLowerCase()
+      );
+
+      atualizarLista(filtrados);
+    }
+
+    function atualizarLista(lista) {
+      const ul = document.getElementById("lista");
+      ul.innerHTML = "";
+
+      lista.forEach(filme => {
+        const li = document.createElement("li");
+        li.textContent = `${filme.titulo} - ${filme.genero} (${filme.ano})`;
+        ul.appendChild(li);
+      });
+    }
+  </script>
+
+</body>
+</html>

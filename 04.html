@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Produtos com Desconto</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🛍️ Produtos com 10% de Desconto</h2>
+
+  <button onclick="aplicarDesconto()">Mostrar Produtos</button>
+
+  <ul id="lista"></ul>
+
+  <script>
+    const produtos = [
+      { nome: "Mouse", preco: 50 },
+      { nome: "Teclado", preco: 100 },
+      { nome: "Monitor", preco: 800 }
+    ];
+
+    function aplicarDesconto() {
+      // usa map para criar novo array com desconto
+      const produtosComDesconto = produtos.map(produto => {
+        return {
+          nome: produto.nome,
+          preco: (produto.preco * 0.9).toFixed(2) // 10% off
+        };
+      });
+
+      mostrar(produtosComDesconto);
+    }
+
+    function mostrar(lista) {
+      const ul = document.getElementById("lista");
+      ul.innerHTML = "";
+
+      lista.forEach(produto => {
+        const li = document.createElement("li");
+        li.textContent = `${produto.nome} - R$ ${produto.preco}`;
+        ul.appendChild(li);
+      });
+    }
+  </script>
+
+</body>
+</html>

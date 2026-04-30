@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Tarefas</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+    button {
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📝 Lista de Tarefas</h2>
+
+  <input type="text" id="tarefaInput" placeholder="Digite uma tarefa">
+  <button onclick="adicionarTarefa()">Adicionar</button>
+
+  <ul id="lista"></ul>
+
+  <script>
+    let tarefas = [];
+
+    function adicionarTarefa() {
+      const input = document.getElementById("tarefaInput");
+      const texto = input.value.trim();
+
+      if (texto === "") return;
+
+      tarefas.push(texto);
+      input.value = "";
+      atualizarLista();
+    }
+
+    function editarTarefa(index) {
+      const novoTexto = prompt("Editar tarefa:", tarefas[index]);
+
+      if (novoTexto !== null && novoTexto.trim() !== "") {
+        // substitui usando splice
+        tarefas.splice(index, 1, novoTexto.trim());
+        atualizarLista();
+      }
+    }
+
+    function atualizarLista() {
+      const ul = document.getElementById("lista");
+      ul.innerHTML = "";
+
+      tarefas.forEach((tarefa, index) => {
+        const li = document.createElement("li");
+        li.textContent = tarefa;
+
+        const btnEditar = document.createElement("button");
+        btnEditar.textContent = "Editar";
+        btnEditar.onclick = () => editarTarefa(index);
+
+        li.appendChild(btnEditar);
+        ul.appendChild(li);
+      });
+    }
+  </script>
+
+</body>
+</html>
